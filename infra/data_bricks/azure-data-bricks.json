@@ -1,0 +1,26 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspacesName": {
+            "type": "String"
+        }
+    },
+    "variables": {
+        "managedResourceGroupName": "[format('databricks-rg-{0}-{1}', parameters('workspacesName'), uniqueString(parameters('workspacesName'), resourceGroup().id))]"   
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Databricks/workspaces",
+            "apiVersion": "2021-04-01-preview",
+            "name": "[parameters('workspacesName')]",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "standard"
+            },
+            "properties": {
+                "managedResourceGroupId": "[subscriptionResourceId('Microsoft.Resources/resourceGroups', variables('managedResourceGroupName'))]"
+            }
+        }
+    ]
+}

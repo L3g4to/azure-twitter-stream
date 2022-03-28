@@ -1,11 +1,6 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - main
-- project/infra/*
+- infra/*
 
 variables: 
 - group: "TwitterStreamVariables"
@@ -27,7 +22,7 @@ stages:
               location: '$(LOCATION)'
               templateLocation: 'Linked artifact'
               overrideParameters: '-storageAccountName $(STORAGE_NAME)'
-              csmFile: 'project/infra/storage_account/azure_storage_account.json'
+              csmFile: 'infra/storage_account/azure_storage_account.json'
               deploymentMode: 'Incremental'
   - stage: DeployDataBricks
     jobs: 
@@ -45,7 +40,7 @@ stages:
               location: '$(LOCATION)'
               templateLocation: 'Linked artifact'
               overrideParameters: '-workspacesName $(DATABRICKS_WORKSPACE_NAME)'
-              csmFile: 'project/infra/data_bricks/azure-data-bricks.json'
+              csmFile: 'infra/data_bricks/azure-data-bricks.json'
               deploymentMode: 'Incremental'
       
 
