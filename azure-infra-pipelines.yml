@@ -1,0 +1,53 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+- project/infra/*
+
+variables: 
+- group: "TwitterStreamVariables"
+
+stages:    
+  - stage: DeployAccountStorage
+    jobs: 
+      - job: DeployAzureStorageAccount
+        pool:
+            vmImage: ubuntu-latest
+        steps:
+          - task: AzureResourceManagerTemplateDeployment@3
+            inputs:
+              deploymentScope: 'Resource Group'
+              azureResourceManagerConnection: '$(CONNECTION)'
+              subscriptionId: '$(SUBSCRIPTION_ID)'
+              action: 'Create Or Update Resource Group'
+              resourceGroupName: '$(RESOURCE_GROUP)'
+              location: '$(LOCATION)'
+              templateLocation: 'Linked artifact'
+              overrideParameters: '-storageAccountName $(STORAGE_NAME)'
+              csmFile: 'project/infra/storage_account/azure_storage_account.json'
+              deploymentMode: 'Incremental'
+  - stage: DeployDataBricks
+    jobs: 
+      - job: DeployDataBricks
+        pool:
+            vmImage: ubuntu-latest
+        steps:
+          - task: AzureResourceManagerTemplateDeployment@3
+            inputs:
+              deploymentScope: 'Resource Group'
+              azureResourceManagerConnection: '$(CONNECTION)'
+              subscriptionId: '$(SUBSCRIPTION_ID)'
+              action: 'Create Or Update Resource Group'
+              resourceGroupName: '$(RESOURCE_GROUP)'
+              location: '$(LOCATION)'
+              templateLocation: 'Linked artifact'
+              overrideParameters: '-workspacesName $(DATABRICKS_WORKSPACE_NAME)'
+              csmFile: 'project/infra/data_bricks/azure-data-bricks.json'
+              deploymentMode: 'Incremental'
+      
+
+   
+
