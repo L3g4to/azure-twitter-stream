@@ -7,7 +7,7 @@ Follow instructions below on how to deploy your infrastructure to Azure. You wil
 You will also need to acquire a token for the [Twitter API](https://developer.twitter.com/en/docs/twitter-api/tutorials).
 
 
-# Azure DevOps Library Variables:
+# Azure DevOps:
 
 The settings below apply in case you would be using Azure Devops to deploy the infrastructure (infra folder).
 
@@ -27,3 +27,15 @@ Add the following items:
 * **SUBSCRIPTION_ID** - Id of your Azure Subscription
 
 ## Step 4: Create a new Pipeline basis the YAML in the infra folder.
+
+# Azure KeyVault
+
+It is recommended to reference your secrets using an Azure KeyVault which you will access through an Azure Databricks secret scope.
+
+The following secrets are being kept in an Azure KeyVault:
+* **EventHubNamespace** - EventHub namespace.
+* **EventHubName** - EventHub name.
+* **EventHubPolicy** - the EventHub policy name.
+* **EventHubSAS** - the SAS token for the Policy.
+* **EventHubServicebus** - the EventHub namespace service bus.
+* **BearerToken** - your Twitter bearer token.
