@@ -2,6 +2,8 @@
 
 The project is aimed at creating an easy deployment of an Azure Databricks Notebook that can stream filtered Tweets to an Azure EventHub.
 
+Follow instructions below on how to deploy your infrastructure to Azure. You will need to also create a KeyVault for the secrets used in the Databricks Notebook.
+
 
 # Azure DevOps Library Variables:
 
