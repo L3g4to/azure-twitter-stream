@@ -1,8 +1,10 @@
 # Azure Twitter Stream Data to EventHub
 
-The project is aimed at creating an easy deployment of an Azure Databricks Notebook that can stream filtered Tweets to an Azure EventHub.
+The project is aimed at creating an easy deployment of an Azure Databricks Notebook that can stream filtered Tweets to an Azure EventHub. The benefit of this approach is the ability to quickly setup and then delete all infrastructure. 
 
 Follow instructions below on how to deploy your infrastructure to Azure. You will need to also create a KeyVault for the secrets used in the Databricks Notebook.
+
+You will also need to acquire a token for the [Twitter API](https://developer.twitter.com/en/docs/twitter-api/tutorials).
 
 
 # Azure DevOps Library Variables:
