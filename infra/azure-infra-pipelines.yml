@@ -6,24 +6,6 @@ variables:
 - group: "InfraGroup"
 
 stages:    
-  - stage: DeployAccountStorage
-    jobs: 
-      - job: DeployAzureStorageAccount
-        pool:
-            vmImage: ubuntu-latest
-        steps:
-          - task: AzureResourceManagerTemplateDeployment@3
-            inputs:
-              deploymentScope: 'Resource Group'
-              azureResourceManagerConnection: '$(CONNECTION)'
-              subscriptionId: '$(SUBSCRIPTION_ID)'
-              action: 'Create Or Update Resource Group'
-              resourceGroupName: '$(RESOURCE_GROUP)'
-              location: '$(LOCATION)'
-              templateLocation: 'Linked artifact'
-              overrideParameters: '-storageAccountName $(STORAGE_NAME)'
-              csmFile: 'infra/storage_account/azure_storage_account.json'
-              deploymentMode: 'Incremental'
   - stage: DeployDataBricks
     jobs: 
       - job: DeployDataBricks
@@ -43,6 +25,23 @@ stages:
               csmFile: 'infra/data_bricks/azure-data-bricks.json'
               deploymentMode: 'Incremental'
       
-
+  - stage: DeployEventHub
+    jobs: 
+      - job: DeployEventHub
+        pool:
+            vmImage: ubuntu-latest
+        steps:
+          - task: AzureResourceManagerTemplateDeployment@3
+            inputs:
+              deploymentScope: 'Resource Group'
+              azureResourceManagerConnection: '$(CONNECTION)'
+              subscriptionId: '$(SUBSCRIPTION_ID)'
+              action: 'Create Or Update Resource Group'
+              resourceGroupName: '$(RESOURCE_GROUP)'
+              location: '$(LOCATION)'
+              templateLocation: 'Linked artifact'
+              overrideParameters: '-event_namespace $(EVENTHUB_NAMESPACE) -event_hub_name $(EVENTHUB_NAME)'
+              csmFile: 'infra/event_hub/azure-event-hub.json'
+              deploymentMode: 'Incremental'
    
 
