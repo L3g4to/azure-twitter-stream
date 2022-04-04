@@ -6,8 +6,11 @@ Follow instructions below on how to deploy your infrastructure to Azure. You wil
 
 You will also need to acquire a token for the [Twitter API](https://developer.twitter.com/en/docs/twitter-api/tutorials).
 
+# Producer and Consumer
 
-# Azure DevOps:
+The code is broken down into 2 Python Notebooks - a Producer and Consumer model. The Producer captures Tweets through the Twitter REST API and pushes them into the Azure EventHub. The Consumer (can work on the same Cluster) listens for EventHub events and extracts the Tweet data. 
+
+# Azure DevOps deployment:
 
 The settings below apply in case you would be using Azure Devops to deploy the infrastructure (infra folder).
 
