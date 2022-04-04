@@ -11,7 +11,6 @@
 
 # COMMAND ----------
 
-
 from pyspark.sql.types import *
 from pyspark.sql.functions import *
 from pyspark.sql import *
@@ -56,7 +55,7 @@ def delete_all_rules(rules):
 
 def set_rules(delete):
     sample_rules = [
-        {"value": "#UkraineWar lang:en", "tag": "#UkraineWar tag"}
+        {"value": "(#UkraineWar OR #WARINUKRAINE) -is:retweet lang:en", "tag": "#UkraineWar tag"}
     ]
     payload = {"add": sample_rules }
     response = requests.post(
@@ -119,4 +118,9 @@ for response_line in response.iter_lines():
         data = EventData(body=response_line)
         event_data_batch.add(data)
         ehpc.send_batch(event_data_batch)
+        
 ehpc.close()
+
+# COMMAND ----------
+
+
